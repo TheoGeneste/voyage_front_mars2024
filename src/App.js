@@ -11,6 +11,9 @@ import ClientPage from './Pages/ClientPage';
 import ClientDetailsPage from './Pages/ClientDetailsPage';
 import ReservationPage from './Pages/ReservationPage';
 import ReservationDetailsPage from './Pages/ReservationDetailsPage';
+import LoginPage from './Pages/LoginPage';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return <>
@@ -25,9 +28,23 @@ function App() {
         <Route path='/client/:id' element={<ClientDetailsPage />} />
         <Route path='/reservations' element={<ReservationPage />} />
         <Route path='/reservation/:id' element={<ReservationDetailsPage />} />
+        <Route path='/login' element={<LoginPage />} />
       </Routes>
       <FooterComponent />
-    </BrowserRouter>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      </BrowserRouter>
+      
   </>;
 }
 

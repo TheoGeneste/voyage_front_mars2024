@@ -23,6 +23,7 @@ const NavBarComponent = () => {
                 <Nav.Link onClick={() => {navigateTo('/categories')}}>Categories</Nav.Link>
                 <Nav.Link onClick={() => {navigateTo('/clients')}}>Clients</Nav.Link>
                 <Nav.Link onClick={() => {navigateTo('/reservations')}}>Reservations</Nav.Link>
+                <Nav.Link onClick={() => {navigateTo('/login')}}>Connexion</Nav.Link>
                 {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
