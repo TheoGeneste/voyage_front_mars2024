@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ClientService from '../Services/ClientService';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import AuthContext from '../Context/AuthContext';
 
 const LoginPage = () => {
     const [user, setUser] = useState({});
+    const {setIsAuthenticated, setToken} = useContext(AuthContext);
 
     const handleChange = (event) => {
         const {name, value} = event.currentTarget;
@@ -17,6 +19,8 @@ const LoginPage = () => {
             const token = await ClientService.login(user)
             if (token.data.token) {
                 axios.defaults.headers.common['Authorization'] = "Bearer "+token.data.token;
+                setIsAuthenticated(true);
+                setToken(token.data.token);
                 toast.success('Vous êtes bien connectée')
             }else{
                 toast.error("Identifiant incorrect")
