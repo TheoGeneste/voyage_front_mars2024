@@ -18,7 +18,8 @@ const LoginPage = () => {
         try {
             const token = await ClientService.login(user)
             if (token.data.token) {
-                axios.defaults.headers.common['Authorization'] = "Bearer "+token.data.token;
+                ClientService.setAxiosToken(token.data.token);
+                window.localStorage.setItem('authToken', token.data.token);
                 setIsAuthenticated(true);
                 setToken(token.data.token);
                 toast.success('Vous êtes bien connectée')

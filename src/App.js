@@ -16,13 +16,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import AuthContext from './Context/AuthContext';
 import { useState } from 'react';
+import ClientService from './Services/ClientService';
 
+ClientService.setup();
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(ClientService.isAuthenticated());
+  const [roles, setRoles] = useState(ClientService.getRoles());
+  const [token, setToken] = useState(window.localStorage.getItem('authToken') ? window.localStorage.getItem('authToken') : null);
+
 
   return <>
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, token, setToken }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, token, setToken, roles, setRoles }}>
       <BrowserRouter>
         <NavBarComponent />
         <Routes>
@@ -31,8 +35,10 @@ function App() {
             <Route path='/categorie/:id' element={<CategorieDetailsPage />} />
             <Route path='/clients' element={<ClientPage />} />
             <Route path='/client/:id' element={<ClientDetailsPage />} />
-            <Route path='/reservations' element={<ReservationPage />} />
-            <Route path='/reservation/:id' element={<ReservationDetailsPage />} />
+            {roles === "ROLE_ADMIN" && <>
+              <Route path='/reservations' element={<ReservationPage />} />
+              <Route path='/reservation/:id' element={<ReservationDetailsPage />} />
+            </>}
           </>}
           <Route path='/' element={<HomePage />} />
           <Route path='/destination/:id' element={<DestinationDetailsPage />} />

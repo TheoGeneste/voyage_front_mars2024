@@ -6,15 +6,16 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../Context/AuthContext';
 import axios from 'axios';
+import ClientService from '../Services/ClientService';
 
 const NavBarComponent = () => {
-    const {isAuthenticated, setIsAuthenticated, setToken} = useContext(AuthContext);
+    const {isAuthenticated, setIsAuthenticated, setToken, roles} = useContext(AuthContext);
     const navigate = useNavigate()
 
     const logout = () => {
         setIsAuthenticated(false);
         setToken(null);
-        axios.defaults.headers.common['Authorization'] = null;
+        ClientService.logout();
     }
     const navigateTo = (route) => {
         navigate(route);
@@ -31,7 +32,9 @@ const NavBarComponent = () => {
                 {isAuthenticated ? <>
                     <Nav.Link onClick={() => {navigateTo('/categories')}}>Categories</Nav.Link>
                     <Nav.Link onClick={() => {navigateTo('/clients')}}>Clients</Nav.Link>
-                    <Nav.Link onClick={() => {navigateTo('/reservations')}}>Reservations</Nav.Link>
+                    {roles === "ROLE_ADMIN" && <>
+                        <Nav.Link onClick={() => {navigateTo('/reservations')}}>Reservations</Nav.Link>
+                    </>}
                     <Nav.Link onClick={() => {navigateTo('/monCompte')}}>Mon Compte</Nav.Link>
                     <button className='btn btn-primary p-2' onClick={logout}>Deconnexion</button>
                 </> : <>

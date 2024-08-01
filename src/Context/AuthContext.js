@@ -4,7 +4,9 @@ const AuthContext = createContext({
     isAuthenticated : false,
     setIsAuthenticated : () =>{},
     token : null,
-    setToken : () => {}
+    setToken : () => {},
+    roles : "ROLE_USER",
+    setRoles : () => {}
 })
 
 export default AuthContext;
